@@ -1,3 +1,4 @@
+import './style.css'
 import { useContext } from "react"
 import { UserContext } from "../../providers/userProvider"
 import { useNavigate } from "react-router-dom"
@@ -20,8 +21,11 @@ export const LoginPage = () => {
         redirectToChat();
     }
 
-    return (<>
-        <button onClick={() => handleSelectUser('userA')}> USUARIO A </button>
-        <button onClick={() => handleSelectUser('userB')}> USUARIO B </button>
-    </>)
+    return (
+        <div className="loginContainer">
+            <h2>Entrar como:</h2>
+            <button className='loginButton' onClick={() => handleSelectUser('userA')}> USUARIO A </button>
+            <button className='loginButton' onClick={() => handleSelectUser('userB')}> USUARIO B </button>
+        </div>
+    )
 }
