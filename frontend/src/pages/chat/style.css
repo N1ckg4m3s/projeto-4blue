@@ -1,0 +1,21 @@
+.chatBox {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.inputArea {
+    display: flex;
+    padding: 10px;
+    background: white;
+    border-top: 1px solid #ccc;
+}
+
+input {
+    flex: 1;
+    padding: 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-right: 10px;
+}

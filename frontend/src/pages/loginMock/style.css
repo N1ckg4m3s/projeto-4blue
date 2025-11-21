@@ -5,21 +5,12 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
     text-align: center;
     width: 280px;
+    max-height: fit-content;
 }
 
 .loginButton {
     width: 100%;
-    padding: 12px;
     margin-top: 10px;
-    border: none;
-    border-radius: 6px;
     font-size: 16px;
-    cursor: pointer;
-    background: #007bff;
-    color: white;
     transition: 0.2s;
-}
-
-.loginButton:hover {
-    background: #005fcc;
 }

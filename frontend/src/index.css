@@ -4,10 +4,57 @@
   font-weight: 400;
 }
 
-body {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100vh;
+  width: 100vw;
+}
+
+body {
   display: flex;
-  place-items: center;
+  flex-direction: column;
   min-width: 320px;
   min-height: 100vh;
+}
+
+.fullPage {
+  display: flex;
+  flex-direction: column;
+  width: calc(100%);
+  height: calc(100%);
+}
+
+/* Botão padrão */
+button {
+  padding: 12px 18px;
+  font-size: 15px;
+  border: none;
+  border-radius: 6px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #005fcc;
+}
+
+/* Header padrão */
+.header {
+    background: #007bff;
+    color: white;
+    padding: 15px;
+    font-size: 18px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
 }
