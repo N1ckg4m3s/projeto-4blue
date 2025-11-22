@@ -16,6 +16,7 @@ dist-ssr
 /backend/venv
 /backend/_pycache_/
 *.py[cod]
+/backend/db.sqlite3
 
 # Editor directories and files
 .vscode/*
