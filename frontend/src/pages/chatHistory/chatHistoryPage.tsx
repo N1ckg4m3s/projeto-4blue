@@ -18,7 +18,10 @@ export const ChatHistoryPage = () => {
     };
 
     useEffect(() => {
-        if (!user) return;
+        if (!user){
+            alert("Selecione um usuario primeiro")
+            return;
+        };
 
         ApiCaller({
             url: 'http://127.0.0.1:8000/api/messages/history/',

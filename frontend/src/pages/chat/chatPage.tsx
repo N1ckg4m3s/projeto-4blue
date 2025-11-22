@@ -14,6 +14,11 @@ export const ChatPage = () => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleSalvarMensagem = (msg: string) => {
+        if (!user) {
+            alert("Selecione um usuario primeiro")
+            return;
+        };
+        
         const payload = {
             "user_id": user,
             "mensage": msg
