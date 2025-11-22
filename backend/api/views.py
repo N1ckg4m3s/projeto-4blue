@@ -33,7 +33,7 @@ class PostMessageView(APIView):
 # GET /api/messages/history/?user_id=?
 class GetHistoryView(APIView):
     def get(self, req):
-        user_id = req.data.get('user_id')
+        user_id = req.query_params.get('user_id')
 
         # Verificar se passou id e mensagem
         if (not user_id):
