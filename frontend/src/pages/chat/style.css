@@ -1,9 +1,3 @@
-.chatBox {
-    flex: 1;
-    padding: 15px;
-    overflow-y: auto;
-}
-
 .inputArea {
     display: flex;
     padding: 10px;

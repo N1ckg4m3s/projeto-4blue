@@ -1,0 +1,22 @@
+.bubble {
+    padding: 10px 14px;
+    border-radius: 10px;
+    width: fit-content;
+    min-width: 10%;
+    max-width: 60%;
+    margin-bottom: 10px;
+}
+
+.user {
+    background: rgb(0, 123, 255);
+    color: white;
+    margin-left: auto;
+    text-align: start;
+}
+
+.system {
+    background: rgb(123, 255, 0);
+    margin-right: auto;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: start;
+}

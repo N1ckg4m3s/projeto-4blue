@@ -49,12 +49,19 @@ button:hover {
 
 /* Header padrão */
 .header {
-    background: #007bff;
-    color: white;
-    padding: 15px;
-    font-size: 18px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    align-items: center;
+  background: #007bff;
+  color: white;
+  padding: 15px;
+  font-size: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+}
+
+/* Chat */
+.chatBox {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
 }

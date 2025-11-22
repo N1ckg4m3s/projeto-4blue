@@ -1,12 +1,22 @@
 import './style.css'
-import React, { useContext, useEffect, useRef, useState } from "react"
+import React, { cache, useContext, useEffect, useRef, useState } from "react"
 import { UserContext } from "../../providers/userProvider"
 import { useNavigate } from "react-router-dom"
+import { ChatMessage } from '../../components/chatBubble/mensage'
 
 export const ChatPage = () => {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
-    const [cacheMessages, setCacheMessages] = useState([]);
+    const [cacheMessages, setCacheMessages] = useState([
+        {
+            mensage: 'oi ',
+            selfMessage: true,
+        },
+        {
+            mensage: 'resposta para -> teste',
+            selfMessage: false,
+        }
+    ]);
     const inputRef = useRef<HTMLInputElement>(null);
 
     /* Valida se tem mensagem */
@@ -20,10 +30,21 @@ export const ChatPage = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (!inputRef.current) return;
+
         const userMessage = inputRef.current?.value;
         const [valido, mensagem] = validadeMessage(userMessage)
 
         if (valido) {
+            // Adicionar a mensagem
+            setCacheMessages([...cacheMessages, {
+                mensage: mensagem,
+                selfMessage: true
+            }])
+
+            // Apaga o texto do input
+            inputRef.current.value = '';
             console.log('envia a mensagem para o banco.')
             console.log('mensagem:', mensagem)
         }
@@ -33,9 +54,7 @@ export const ChatPage = () => {
         navigate('/history')
     }
 
-    useEffect(() => {
-
-    }, [])
+    useEffect(() => { }, [])
 
     /** VIEW **/
     const BackIcon: React.ReactNode = (<>
@@ -65,7 +84,12 @@ export const ChatPage = () => {
                 <button onClick={handleNavigateToHistory}>Ver historico</button>
             </header>
             <div className="chatBox">
-
+                {cacheMessages.map((msg) => (
+                    <ChatMessage
+                        mensage={msg.mensage}
+                        selfMessage={msg.selfMessage}
+                    />
+                ))}
             </div>
             <form className="inputArea" onSubmit={handleSubmit}>
                 <input id="mensagemInput" placeholder="Digite sua mensagem..." ref={inputRef} />
