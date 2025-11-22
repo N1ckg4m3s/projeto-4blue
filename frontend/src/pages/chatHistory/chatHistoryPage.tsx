@@ -1,10 +1,11 @@
 import './style.css'
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../providers/userProvider"
 import { format } from 'date-fns';
 import { useNavigate } from "react-router-dom";
 import { BackIcon } from "../../components/backIcon";
 import { ChatMessage } from "../../components/chatBubble/mensage";
+import { ApiCaller } from '../../controller/ApiCaller';
 
 export const ChatHistoryPage = () => {
     const { user } = useContext(UserContext);
@@ -12,12 +13,12 @@ export const ChatHistoryPage = () => {
     const [historyMessages, setHistoryMessages] = useState([
         {
             mensage: 'oi ',
-            selfMessage: true,
+            self_message: true,
             created_at: '10/10/10'
         },
         {
             mensage: 'resposta para -> teste',
-            selfMessage: false,
+            self_message: false,
             created_at: '12/10/10'
         }
     ]);
@@ -25,6 +26,24 @@ export const ChatHistoryPage = () => {
     const formatDate = (dateString: string) => {
         return format(new Date(dateString), "dd/MM/yyyy");
     };
+
+    useEffect(() => {
+        if(!user) return;
+
+        ApiCaller({
+            url: 'http://127.0.0.1:8000/api/messages/history/',
+            method: 'GET',
+            params: {
+                user_id: user
+            },
+            onError: (error: any) => {
+                console.error('Erro ao obter dados', error)
+            },
+            onSuccess: (data: any) => {
+                setHistoryMessages(data)
+            }
+        })
+    }, [user])
 
     return (
         <div className='fullPage'>
@@ -53,7 +72,7 @@ export const ChatHistoryPage = () => {
                             )}
                             <ChatMessage
                                 mensage={msg.mensage}
-                                selfMessage={msg.selfMessage}
+                                selfMessage={msg.self_message}
                             />
                         </div>
                     )
