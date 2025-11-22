@@ -6,6 +6,7 @@ import { ChatMessage } from '../../components/chatBubble/mensage'
 import { BackIcon } from '../../components/backIcon'
 import { ApiCaller } from '../../controller/ApiCaller'
 import { message } from '../../controller/types'
+import { ChatTypingAnimation } from '../../components/typingAnimation/typingAnimation'
 
 export const ChatPage = () => {
     const { user } = useContext(UserContext);
@@ -13,12 +14,15 @@ export const ChatPage = () => {
     const [cacheMessages, setCacheMessages] = useState<message[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
 
+    /** Efeito de digitando */
+    const [isTyping, setTyping] = useState<boolean>(false);
+
     const handleSalvarMensagem = (msg: string) => {
         if (!user) {
             alert("Selecione um usuario primeiro")
             return;
         };
-        
+
         const payload = {
             "user_id": user,
             "mensage": msg
@@ -36,11 +40,16 @@ export const ChatPage = () => {
                     return;
                 }
 
-                setCacheMessages([
-                    ...cacheMessages,
-                    userMsg,
-                    botMsg
-                ])
+                /* Adiciona a mensagem do usuario com os dados do banco */
+                setCacheMessages(prev => [...prev, userMsg])
+
+                /* Demora de 1 a 1.5 sec para simular chat */
+                const randomDelay = 1000 + Math.random() * 500
+                setTimeout(() => {
+                    setTyping(false)
+                    setCacheMessages(prev => [...prev, botMsg])
+                }, randomDelay)
+
             },
             onError(error) {
                 console.error('Erro ao obter os dados', error)
@@ -66,8 +75,12 @@ export const ChatPage = () => {
         const [valido, mensagem] = validadeMessage(userMessage)
 
         if (valido) {
+            // Envia para a API
             handleSalvarMensagem(mensagem)
+
+            // Apaga o valor do input
             inputRef.current.value = ''
+            setTyping(true)
         }
     }
 
@@ -91,6 +104,9 @@ export const ChatPage = () => {
                         selfMessage={msg.self_message}
                     />
                 ))}
+                {
+                    isTyping && <ChatTypingAnimation />
+                }
             </div>
             <form className="inputArea" onSubmit={handleSubmit}>
                 <input id="mensagemInput" placeholder="Digite sua mensagem..." ref={inputRef} />
