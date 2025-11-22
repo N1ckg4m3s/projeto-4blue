@@ -30,7 +30,7 @@ class PostMessageView(APIView):
             status=status.HTTP_201_CREATED
         )
 
-# GET /api/messages/history/?user_id=?
+# GET /api/messages/history?user_id=?
 class GetHistoryView(APIView):
     def get(self, req):
         user_id = req.query_params.get('user_id')
@@ -42,4 +42,4 @@ class GetHistoryView(APIView):
         mensagens_do_usuario = Message.objects.filter(user_id=user_id).order_by('created_at')
         mensagens_serializadas = MessageSerializer(mensagens_do_usuario, many=True)
         
-        return Response(mensagens_serializadas.data)
+        return Response(mensagens_serializadas.data, status=status.HTTP_200_OK)

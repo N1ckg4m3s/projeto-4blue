@@ -53,17 +53,34 @@ Responsável por receber mensagens do frontend, salvar no banco de dados SQLite 
 * pip
 * venv
 
-### Instalação
+### Ativando `venv`
 
 ```bash
     cd backend
     python -m venv venv
     .\venv\Scripts\activate   # Windows
     # ou source venv/bin/activate   # Linux/Mac
+```
+
+### Instalação
+
+**Com o `venv` ativo**
+
+```bash
     pip install -r requirements.txt
 ```
 
+### Rodando os testes
+
+**Com o `venv` ativo**
+
+```bash
+    python manage.py test api
+```
+
 ### Rodando o Servidor
+
+**Com o `venv` ativo**
 
 ```bash
     python manage.py migrate
