@@ -6,29 +6,19 @@ import { useNavigate } from "react-router-dom";
 import { BackIcon } from "../../components/backIcon";
 import { ChatMessage } from "../../components/chatBubble/mensage";
 import { ApiCaller } from '../../controller/ApiCaller';
+import { message } from '../../controller/types';
 
 export const ChatHistoryPage = () => {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
-    const [historyMessages, setHistoryMessages] = useState([
-        {
-            mensage: 'oi ',
-            self_message: true,
-            created_at: '10/10/10'
-        },
-        {
-            mensage: 'resposta para -> teste',
-            self_message: false,
-            created_at: '12/10/10'
-        }
-    ]);
+    const [historyMessages, setHistoryMessages] = useState<message[]>([]);
 
     const formatDate = (dateString: string) => {
         return format(new Date(dateString), "dd/MM/yyyy");
     };
 
     useEffect(() => {
-        if(!user) return;
+        if (!user) return;
 
         ApiCaller({
             url: 'http://127.0.0.1:8000/api/messages/history/',
@@ -39,7 +29,7 @@ export const ChatHistoryPage = () => {
             onError: (error: any) => {
                 console.error('Erro ao obter dados', error)
             },
-            onSuccess: (data: any) => {
+            onSuccess: (data: message[]) => {
                 setHistoryMessages(data)
             }
         })

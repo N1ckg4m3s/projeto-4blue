@@ -1,24 +1,47 @@
 import './style.css'
-import React, { cache, useContext, useEffect, useRef, useState } from "react"
+import React, { useContext, useRef, useState } from "react"
 import { UserContext } from "../../providers/userProvider"
 import { useNavigate } from "react-router-dom"
 import { ChatMessage } from '../../components/chatBubble/mensage'
 import { BackIcon } from '../../components/backIcon'
+import { ApiCaller } from '../../controller/ApiCaller'
+import { message } from '../../controller/types'
 
 export const ChatPage = () => {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
-    const [cacheMessages, setCacheMessages] = useState([
-        {
-            mensage: 'oi ',
-            selfMessage: true,
-        },
-        {
-            mensage: 'resposta para -> teste',
-            selfMessage: false,
-        }
-    ]);
+    const [cacheMessages, setCacheMessages] = useState<message[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
+
+    const handleSalvarMensagem = (msg: string) => {
+        const payload = {
+            "user_id": user,
+            "mensage": msg
+        }
+
+        ApiCaller({
+            url: 'http://127.0.0.1:8000/api/messages/',
+            method: 'POST',
+            body: payload,
+            onSuccess(data) {
+                const userMsg: message = data.user_message
+                const botMsg: message = data.bot_message
+                if (!userMsg || !botMsg) {
+                    console.error('Sem resposta do bot')
+                    return;
+                }
+
+                setCacheMessages([
+                    ...cacheMessages,
+                    userMsg,
+                    botMsg
+                ])
+            },
+            onError(error) {
+                console.error('Erro ao obter os dados', error)
+            },
+        })
+    }
 
     /* Valida se tem mensagem */
     const validadeMessage = (message: string | undefined): [boolean, string] => {
@@ -38,24 +61,14 @@ export const ChatPage = () => {
         const [valido, mensagem] = validadeMessage(userMessage)
 
         if (valido) {
-            // Adicionar a mensagem
-            setCacheMessages([...cacheMessages, {
-                mensage: mensagem,
-                selfMessage: true
-            }])
-
-            // Apaga o texto do input
-            inputRef.current.value = '';
-            console.log('envia a mensagem para o banco.')
-            console.log('mensagem:', mensagem)
+            handleSalvarMensagem(mensagem)
+            inputRef.current.value = ''
         }
     }
 
     const handleNavigateToHistory = () => {
         navigate('/history')
     }
-
-    useEffect(() => { }, [])
 
     return (
         <div className='fullPage'>
@@ -67,10 +80,10 @@ export const ChatPage = () => {
                 <button onClick={handleNavigateToHistory}>Ver historico</button>
             </header>
             <div className="chatBox">
-                {cacheMessages.map((msg) => (
+                {cacheMessages && cacheMessages.map((msg) => (
                     <ChatMessage
                         mensage={msg.mensage}
-                        selfMessage={msg.selfMessage}
+                        selfMessage={msg.self_message}
                     />
                 ))}
             </div>
