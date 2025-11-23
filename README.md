@@ -53,9 +53,9 @@ PROJETO-4Blue/
 ### Frontend
 
 ```md
-    cd interface
+    cd frontend
     npm install
-    npm run dev # Roda o servidor Vite
+    npm run dev
 ```
 
 Frontend disponível em `<http://localhost:5173/>`.
