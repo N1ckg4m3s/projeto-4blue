@@ -33,9 +33,25 @@ export const ApiCaller = async ({ url, method, body, params, onSuccess, onError 
             body: body ? JSON.stringify(body) : undefined
         });
 
+        // checagem de status
+        if (!response.ok) {
+            let errorMessage = null;
+            try {
+                errorMessage = await response.json();
+            } catch (_) { }
+            onError({
+                status: response.status,
+                body: errorMessage
+            });
+            return;
+        }
+
         const data = await response.json();
         onSuccess(data);
     } catch (err) {
-        onError(err);
+        onError({
+            status: null,
+            body: err
+        });
     }
 }
