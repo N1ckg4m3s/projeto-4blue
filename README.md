@@ -14,7 +14,7 @@ O projeto permite que dois usuários (“Usuário A” e “Usuário B”) envie
 
 ```md
 PROJETO-4Blue/
-├── interface/ # Frontend em React + Vite
+├── frontend/ # Frontend em React + Vite
 │ ├── src/
 │ │ ├── pages/
 │ │ ├── components/

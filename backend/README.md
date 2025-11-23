@@ -15,7 +15,7 @@ Responsável por receber mensagens do frontend, salvar no banco de dados SQLite 
 │   ├── apps.py
 │   ├── models.py
 │   ├── serializers.py
-│   ├── tests.py
+│   ├── test.py
 │   ├── urls.py
 │   ├── utils.py
 │   └── views.py

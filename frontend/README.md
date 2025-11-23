@@ -8,7 +8,7 @@ Implementado em React, com React Router para navegação entre telas, Context AP
 ## Estrutura de Pastas
 
 ```md
-interface/
+frontend/
 ├── public/
 │   └── vite.svg
 ├── src/
@@ -72,7 +72,7 @@ interface/
 ### instalação
 
 ```bash
-    cd interface
+    cd frontend
     npm install
 ```
 
